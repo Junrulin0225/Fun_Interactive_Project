@@ -1,1 +1,31 @@
+word_list = ["aardvark", "baboon", "camel"]
+import random
+chosen_word = random.choice(word_list)
+#Testing code
+print(f'The chosen word is {chosen_word}!')
 
+lives = 6
+display = []
+for i in range(len(chosen_word)):
+    display += '_'
+
+end_of_game = False
+while not end_of_game:
+    guess = input('Guess a letter: ').lower()
+    if guess in display:
+        print(f'You have already enter {guess}. Please guess another letter!')
+    
+    for position in range(len(chosen_word)):
+        if guess == chosen_word[position]:
+            display[position] = chosen_word[position]
+        
+    if guess not in chosen_word:
+        print(f'{guess} is not in the word, you lost one life!')
+        lives -=1
+        if lives ==0:
+            end_of_game == True
+            print('You lose!')
+    
+    if '_' not in display:
+        print('You won!')
+    print(f"{' '.join(display)}")
