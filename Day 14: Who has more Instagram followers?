@@ -1,1 +1,46 @@
+import random
+from game_data import data
 
+def get_random_option():
+    return random.choice(data)
+
+def format_option(option):
+    name = option['name']
+    description = option['description']
+    country = option['country']
+    return f'{name}, a {description}, from {country} '
+
+def check_answer(user, count_A, count_B):
+    if count_A > count_B and user == 'A':
+        return True
+    elif count_A > count_B and user == 'B':
+        return False
+    elif count_A < count_B and user == 'A':
+        return False
+    elif count_A < count_B and user == 'B':
+         return True
+
+def game():
+    score = 0
+    game_shoud_continue = True
+    first = get_random_option()
+    second = get_random_option()
+    while game_shoud_continue == True:
+        if first == second:
+            second = get_random_option()
+        print(f'Compare {format_option(first)} \nAgainst {format_option(second)}')
+        user = input("Who has more followers? Type 'A' or 'B': ").upper()
+
+        count_A = first['follower_count']
+        count_B = second['follower_count']
+        
+        is_correct= check_answer(user, count_A, count_B)
+        if is_correct == True:
+            score +=1
+            print(f'You are right! Current score is {score}')
+            
+        if is_correct == False:
+            game_should_continue = False
+            print(f'You are wrong! Final score is {score}')
+            break
+game()
